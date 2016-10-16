@@ -18,9 +18,15 @@ module.exports = {
     loaders: [
       { test: /\.js$/, loaders: ['react-hot', 'babel?' + JSON.stringify({presets: ['react', 'es2015', 'stage-0']})], exclude: /node_modules/ },
       { test: /\.scss$/, loaders: ['style', 'css', 'postcss', 'sass'] },
+      { test: /\.css$/, loaders: ['style','css']},
     ],
   },
-  plugins: [ignore],
+  plugins: [
+        new webpack.ProvidePlugin({
+           $: "jquery",
+           jQuery: "jquery"
+       })
+    ],
   devServer: {
     host: '0.0.0.0',
     proxy: {
