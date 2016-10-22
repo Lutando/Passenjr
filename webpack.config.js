@@ -1,18 +1,20 @@
 var webpack = require('webpack');
+var path = require('path');
 var ignore = new webpack.IgnorePlugin(/\.svg$/)
 
 module.exports = {
   devtool: 'source-map',
+  context: path.join(__dirname, 'scripts'),
   entry: {
     main: [
-      './scripts/main.js',
-      'webpack-dev-server/client?http://localhost:8080',
-      'webpack/hot/only-dev-server',
+      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+      './main.js',
     ],
   },
   output: {
-    publicPath: 'http://localhost:8080/',
-    filename: '/js/[name].js',
+    path: path.join(__dirname, 'server/public'),
+    filename: 'main.js',
+    publicPath: '/'
   },
   module: {
     loaders: [
@@ -25,12 +27,15 @@ module.exports = {
         new webpack.ProvidePlugin({
            $: "jquery",
            jQuery: "jquery"
-       })
+       }),
+      new webpack.optimize.OccurenceOrderPlugin(),
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoErrorsPlugin()
     ],
   devServer: {
     host: '0.0.0.0',
     proxy: {
-      '/api/*': 'http://localhost:8081',
+      '/api/*': 'http://localhost:8000',
     },
   },
 };

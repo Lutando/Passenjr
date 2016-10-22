@@ -4,13 +4,17 @@ import 'bootstrap';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { Provider } from 'react-redux';
+
 import '../styles/main.scss';
+import store from "./store/store";
 
 
 import App from './containers/App';
 
+const main = document.getElementById('main')
 
 ReactDOM.render(
-    <App />,
-    document.getElementById('main')
-);
+    <Provider store={store}>
+        <App />
+    </Provider>, main);
