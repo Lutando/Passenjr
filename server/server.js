@@ -5,6 +5,8 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpack = require('webpack');
 const webpackConfig = require('../webpack.config');
 const configProvider = require('./config/config');
+const axios = require('axios');
+const querystring = require('querystring');
 
 const port = 8000;
 const compiler = webpack(webpackConfig);
@@ -41,9 +43,16 @@ app.get("/api/token", function (req, res) {
       grant_type: 'client_credentials',
       scope: 'transitapi:all',
     };
-    
-    console.log("lol");
-    res.status(200).send(JSON.stringify("lol!"));
+
+    axios.post(`${config.identityStsUrl}/connect/token/`, querystring.stringify(body))
+    .then(function(response) {
+      res.status(200).send(response.data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(JSON.stringify('token could not be retrieved'));
+     })
+
 });
 
 

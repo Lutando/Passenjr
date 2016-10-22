@@ -6,11 +6,27 @@ export default function reducer(state ={
     fetched: false,
     error: null,
 }, action) {
-    console.log('in reducer');
-    console.log(action.type);
     switch(action.type) {
         case types.FETCH_TOKEN: {
-            return {...state, fetching: true}
+            return {
+                ...state,
+                fetching: true
+            }
+        }
+        case types.FETCH_TOKEN_FULFILLED: {
+            return {
+                ...state,
+                fetching:false,
+                fetched:true,
+                token: action.payload.access_token
+            }
+        }
+        case types.FETCH_TOKEN_REJECTED: {
+            return {
+                ...state,
+                fetching:false,
+                fetched:false,
+            }            
         }
     }
 

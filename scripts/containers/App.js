@@ -25,8 +25,6 @@ class App extends Component {
         dispatch(fetchToken());
     }
     render() {
-        console.log('render');
-        console.log(this.props);
         return (    
             <div>
 
@@ -39,9 +37,7 @@ App.PropTypes = propTypes;
 
 function mapStateToProps(state) {
   const { token, fetching, fetched, error } = state.token;
-  console.log("map");
-  console.log(state.token);
-  console.log(token);
+  
   return {
     token,
     fetching,
