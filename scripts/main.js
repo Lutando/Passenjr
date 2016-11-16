@@ -15,6 +15,10 @@ import App from './containers/App';
 const main = document.getElementById('main')
 
 ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>, main);
+        <Provider store={store}>
+            <App />
+        </Provider>, main);
+
+if(module.hot){
+    module.hot.accept();
+}
