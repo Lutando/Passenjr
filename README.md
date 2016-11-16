@@ -7,10 +7,8 @@ See it in action (soon) at https://passenjr.com
 
 1. Go to the WhereIsMyTransport [developer portal](https://developer.whereismytransport.com) and generate some client credentials
 2. Set your environment variables (on windows): 
-
-          -`$env:ClIENT_ID={CLIENT_ID}`
-      
-          -`$env:CLIENT_SECRET={CIENT_SECRET}`
+   1. `$env:ClIENT_ID={CLIENT_ID}`
+   2. `$env:CLIENT_SECRET={CIENT_SECRET}`
 3. `npm install`
 4. `npm run start`
 5. visit `http://localhost:8080`
