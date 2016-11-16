@@ -63,15 +63,12 @@ app.get("/api/token", function (req, res) {
           //res.status(500).send(JSON.stringify('token could not be retrieved'));
         })*/
 
-
         res.status(200).send(response.data);
     })
     .catch((err) => {
       console.log(err);
       res.status(500).send(JSON.stringify('token could not be retrieved'));
      })
-//https://platform.whereismytransport.com/api/lines/yKomjMLrRkeRoHOxt5zkzw/timetables?earliestDepartureTime=2016-11-09T10:00:00Z
-     
 });
 
 
