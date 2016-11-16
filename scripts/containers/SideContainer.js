@@ -4,7 +4,7 @@ class SideContainer extends Component {
     render() {
         return (
             <div className='side-container'>
-                Side
+            
             </div>
         );
     }

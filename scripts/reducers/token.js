@@ -18,7 +18,7 @@ export default function reducer(state ={
                 ...state,
                 fetching:false,
                 fetched:true,
-                token: action.payload.access_token
+                token: action.payload
             }
         }
         case types.FETCH_TOKEN_REJECTED: {
