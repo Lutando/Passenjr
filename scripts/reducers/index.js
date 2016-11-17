@@ -1,7 +1,9 @@
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
 
-import token from "./token";
+import token from './token';
+import location from './location';
 
 export default combineReducers({
-    token
-})
+    token,
+    location
+});

@@ -23,6 +23,7 @@ class App extends Component {
 
     componentDidMount() {
         const { dispatch } = this.props;
+        console.log(dispatch)
         dispatch(fetchToken());
     }
     render() {
@@ -39,7 +40,6 @@ App.PropTypes = propTypes;
 
 function mapStateToProps(state) {
   const { token, fetchingToken, fetchedToken, errorToken } = state.token;
-  
   return {
     token,
     fetchingToken,
