@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 
 import { fetchToken } from '../actions/token';
 
-import NavContainer from '../containers/NavContainer';
+import Nav from '../components/Nav';
+
 import SideContainer from '../containers/SideContainer';
 import MapContainer from '../containers/MapContainer';
 
@@ -13,9 +14,9 @@ import 'bootstrap';
 const propTypes = {
   dispatch: PropTypes.func.isRequired,
   token: PropTypes.string,
-  fetching: PropTypes.bool,
-  fetched: PropTypes.bool,
-  error: PropTypes.string
+  fetchingToken: PropTypes.bool,
+  fetchedToken: PropTypes.bool,
+  errorToken: PropTypes.string
 };
 
 class App extends Component {
@@ -27,6 +28,7 @@ class App extends Component {
     render() {
         return (    
           <div className='full-height'>
+            <Nav />
             <MapContainer />
           </div>
         );
@@ -36,13 +38,13 @@ class App extends Component {
 App.PropTypes = propTypes;
 
 function mapStateToProps(state) {
-  const { token, fetching, fetched, error } = state.token;
+  const { token, fetchingToken, fetchedToken, errorToken } = state.token;
   
   return {
     token,
-    fetching,
-    fetched,
-    error,
+    fetchingToken,
+    fetchedToken,
+    errorToken,
   };
 }
 
