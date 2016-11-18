@@ -1,4 +1,6 @@
 
+$navbar-height: 4rem;
+
 .leaflet-container {
     height: 100vh;
     width: 100%;
@@ -28,4 +30,27 @@ body {
     top: 1em;
     left: 2em;
     margin-top: 1em;
+}
+
+.passenjr-navbar {
+    position: relative;
+    height: $navbar-height;
+}
+
+.leaflet-map {
+    /*position: relative;*/
+    width: 100%;
+    height: calc(100vh - $navbar-height);
+}
+
+.custom-bar {
+    position: fixed;
+    width: calc(100vw - 3rem);
+    margin: 1.5rem;
+    height: 2rem;
+    padding-top: 0.8rem;
+    background: #162834;
+    z-index: 1;
+    border-radius: 1rem;
+    box-shadow: 1px 1px 5px rgba(grey, 0.3);
 }

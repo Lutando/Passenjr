@@ -23,13 +23,16 @@ class App extends Component {
 
     componentDidMount() {
         const { dispatch } = this.props;
-        console.log(dispatch)
         dispatch(fetchToken());
     }
+
     render() {
         return (    
           <div className='full-height'>
-            <Nav />
+            {/*<Nav />*/}
+            <div className="custom-bar">
+              Hello
+            </div>
             <MapContainer />
           </div>
         );
