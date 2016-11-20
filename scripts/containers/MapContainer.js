@@ -20,7 +20,6 @@ class MapContainer extends Component {
     }
 
     handleContextMenu(e) {
-      console.log(this.props)
       const { dispatch } = this.props;
 
       const location = [e.latlng.lng, e.latlng.lat];
