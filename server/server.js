@@ -71,6 +71,10 @@ app.get("/api/token", function (req, res) {
      })
 });
 
+app.get('/api/journeys', function(req, res) {
+  accessToken = req.headers['authorization']
+});
+
 
 app.use("/", express.static(path.join(__dirname, './public')));
 
