@@ -29,10 +29,7 @@ class App extends Component {
     render() {
         return (    
           <div className='full-height'>
-            {/*<Nav />*/}
-            <div className="custom-bar">
-              Hello
-            </div>
+            <Nav />
             <MapContainer />
           </div>
         );

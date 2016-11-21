@@ -43,14 +43,19 @@ body {
     height: calc(100vh - $navbar-height);
 }
 
-.custom-bar {
+.custom-navbar {
     position: fixed;
     width: calc(100vw - 3rem);
     margin: 1.5rem;
     height: 2rem;
     padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
     background: #162834;
     z-index: 1;
-    border-radius: 1rem;
+    border-radius: 1.3rem;
     box-shadow: 1px 1px 5px rgba(grey, 0.3);
+}
+
+.nav-logo {
+    margin-left: 1.5rem;
 }

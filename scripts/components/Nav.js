@@ -4,15 +4,9 @@ class Nav extends Component {
 
     render() {
         return (
-            <nav className="navbar navbar-default passenjr-navbar">
-                <div className="container-fluid">
-                    <div className="navbar-header">
-                        <a className="navbar-brand" href="#">
-                            <img alt="Passenjr" src="img/nav-logo.jpg" />
-                        </a>
-                    </div>
-                </div>
-            </nav>
+            <div className="custom-navbar">
+              <img className='nav-logo' src='img/nav-logo.png' />
+            </div>
             
         );
     }
