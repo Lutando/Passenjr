@@ -16,14 +16,19 @@ class ItineraryContainer extends Component {
 
 
     getLegPaths() {
-        const { legs }  = this.props.journey.itineraries[0]
+
+        //Redo as immutable to the props
+        /*const { legs }  = this.props.journey.itineraries[0]
         console.log(legs)
         var reversedLegs = legs.map(function(leg){
             console.log('inmap')
             console.log(leg)
             var newCoordinates = leg.geometry.coordinates.map(function(coordinate){
-            
-                return coordinate.reverse()
+                const newCoordinate = [coordinate[0], coordinate[1]]
+                console.log('infunc')
+                console.log(newCoordinate)
+                //console.log([coordinate[1], coordinate[0]])
+                return newCoordinate
             });
             console.log(newCoordinates)
             var editedLeg = leg
@@ -31,7 +36,7 @@ class ItineraryContainer extends Component {
             return editedLeg
             });
             console.log('here')
-        console.log(reversedLegs);
+        console.log(reversedLegs); */
             
     }
     
