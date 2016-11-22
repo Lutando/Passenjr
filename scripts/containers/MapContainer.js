@@ -7,6 +7,8 @@ import DepartureMarkerContainer from './DepartureMarkerContainer';
 
 import ArrivalMarkerContainer from './ArrivalMarkerContainer';
 
+import ItineraryContainer from './ItineraryContainer';
+
 import { setDepartureLocation, setArrivalLocation } from '../actions/location';
 import { fetchJourney } from '../actions/journey';
 
@@ -30,9 +32,7 @@ class MapContainer extends Component {
       //this will be removed, just here for test purposes
       if(location.length == 2 && prevlocation.length == 2)
       {
-        console.log('here')
         var query = {departureLocation: location, arrivalLocation: prevlocation}
-        console.log(query)
         dispatch(fetchJourney(query))
       }
     }
@@ -47,6 +47,7 @@ class MapContainer extends Component {
                   />
                   <DepartureMarkerContainer />
                   <ArrivalMarkerContainer />
+                  <ItineraryContainer />
                 </Map>
             </div>
         );

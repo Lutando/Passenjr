@@ -5,10 +5,12 @@ import { Marker, Popup } from 'react-leaflet';
 import { connect } from 'react-redux';
 
 import { setArrivalLocation } from '../actions/location';
+import { fetchJourney } from '../actions/journey';
 
 const propTypes = {
   dispatch: PropTypes.func.isRequired,
   arrivalLocation: PropTypes.array,
+  departureLocation: PropTypes.array,
   errorLocation: PropTypes.string,
 };
 
@@ -20,6 +22,13 @@ class ArrivalMarkerContainer extends Component {
       const newLocation = [e.target._latlng.lng,e.target._latlng.lat]
     
       dispatch(setArrivalLocation(newLocation))
+
+      if(this.props.departureLocation.length == 2)
+      {
+          var query = {departureLocation: this.props.departureLocation, arrivalLocation: newLocation}
+          dispatch(fetchJourney(query))
+      }
+      
     }
 
     isArrivalLocation() {
@@ -50,10 +59,11 @@ class ArrivalMarkerContainer extends Component {
 ArrivalMarkerContainer.PropTypes = propTypes;
 
 function mapStateToProps(state) {
-  const {arrivalLocation, errorLocation } = state.location;
+  const {arrivalLocation, departureLocation, errorLocation } = state.location;
 
   return {
     arrivalLocation,
+    departureLocation,
     errorLocation,
   };
 }

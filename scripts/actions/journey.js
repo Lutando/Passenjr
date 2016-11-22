@@ -34,12 +34,13 @@ export function fetchJourney(query) {
         axios.defaults.headers = headers
         axios.post(`${urls.TRANSITAPI_URL}/journeys`,{...journeyQuery})
             .then((response) => {
-                console.log(response)
+                dispatch({type: types.FETCH_JOURNEY_FULFILLED, payload: response.data})
+
             })
             .catch((err) => {
+                dispatch({type: types.FETCH_JOURNEY_REJECTED})
                 console.log(err)
             })
 
-        //console.log(geometry);
     }
 }
