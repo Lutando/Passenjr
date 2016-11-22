@@ -1,0 +1,1 @@
+export const TRANSITAPI_URL = 'https://platform.whereismytransport.com/api'

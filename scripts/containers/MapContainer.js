@@ -8,6 +8,7 @@ import DepartureMarkerContainer from './DepartureMarkerContainer';
 import ArrivalMarkerContainer from './ArrivalMarkerContainer';
 
 import { setDepartureLocation, setArrivalLocation } from '../actions/location';
+import { fetchJourney } from '../actions/journey';
 
 const propTypes = {
   dispatch: PropTypes.func.isRequired,
@@ -18,11 +19,6 @@ const propTypes = {
 
 class MapContainer extends Component {
 
-    componentDidMount() {
-        const { dispatch } = this.props;
-
-    }
-
     handleContextMenu(e) {
       const { dispatch } = this.props;
 
@@ -31,7 +27,14 @@ class MapContainer extends Component {
       const prevlocation = this.props.departureLocation
       dispatch(setDepartureLocation(location));
       dispatch(setArrivalLocation(prevlocation));
-
+      //this will be removed, just here for test purposes
+      if(location.length == 2 && prevlocation.length == 2)
+      {
+        console.log('here')
+        var query = {departureLocation: location, arrivalLocation: prevlocation}
+        console.log(query)
+        dispatch(fetchJourney(query))
+      }
     }
 
     render() {
