@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import { Polyline } from 'react-leaflet';
 
+import Immutable from 'immutable';
+
 const propTypes = {
     dispatch: PropTypes.func.isRequired,
     journey: PropTypes.object,
@@ -16,38 +18,27 @@ class ItineraryContainer extends Component {
 
 
     getLegPaths() {
+        const { legs } = this.props.journey.itineraries[0]
+        var data = Immutable.fromJS(legs);
+        
+        var reversedLegs = data.map(function(leg) {
 
-        //Redo as immutable to the props
-        /*const { legs }  = this.props.journey.itineraries[0]
-        console.log(legs)
-        var reversedLegs = legs.map(function(leg){
-            console.log('inmap')
-            console.log(leg)
-            var newCoordinates = leg.geometry.coordinates.map(function(coordinate){
-                const newCoordinate = [coordinate[0], coordinate[1]]
-                console.log('infunc')
-                console.log(newCoordinate)
-                //console.log([coordinate[1], coordinate[0]])
-                return newCoordinate
-            });
-            console.log(newCoordinates)
-            var editedLeg = leg
-            editedLeg.geometry.coordinates = newCoordinates
-            return editedLeg
-            });
-            console.log('here')
-        console.log(reversedLegs); */
+            var newCoordinates = leg.get('geometry').get('coordinates').map(function(coordinate){
+                return coordinate.reverse()
+            })
+
+            return newCoordinates
+        });
+
+        var newLegs = reversedLegs.toJS();
+
+        return newLegs
             
     }
     
 
     canRenderLegs() {
-        if(this.props.fetchedJourney)
-        {
-            this.getLegPaths()
-        }
-        
-        return 
+        return this.props.fetchedJourney
     }
 
     render() {
@@ -55,7 +46,12 @@ class ItineraryContainer extends Component {
 
         if(this.canRenderLegs())
         {
-
+            var legs = this.getLegPaths()
+            var polyLines = legs.map(function(leg) {
+                return <Polyline positions={leg} />
+            })
+            console.log(polyLines)
+            itineraries = <Polyline positions={legs} />
         }
 
         return itineraries
