@@ -50,7 +50,6 @@ class ItineraryContainer extends Component {
             var polyLines = legs.map(function(leg) {
                 return <Polyline positions={leg} />
             })
-            console.log(polyLines)
             itineraries = <Polyline positions={legs} />
         }
 
