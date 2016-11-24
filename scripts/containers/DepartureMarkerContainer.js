@@ -39,7 +39,7 @@ class DepartureMarkerContainer extends Component {
     renderMarker() {
             return <Marker position={[this.props.departureLocation[1],this.props.departureLocation[0]]} draggable={true} onDragend={this.handleMarkerDragged.bind(this)}>
                     <Popup>
-                      <span>Departure: {this.props.departureLocation[1].toFixed(5)} , {this.props.departureLocation[0].toFixed(5)} </span>
+                      <span >Departure: {this.props.departureLocation[1].toFixed(5)} , {this.props.departureLocation[0].toFixed(5)} </span>
                     </Popup>
                   </Marker>       
     }

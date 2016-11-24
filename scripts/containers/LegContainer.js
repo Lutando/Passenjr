@@ -15,25 +15,24 @@ const propTypes = {
 
 class LegContainer extends Component {
 
-    getPolyLine() {
-
-    }
-
-    getLineColour() {
-        let defaultColor = '#162834'
+    getLineProperties() {
+        let colour = '#162834'
+        let dashArray = "5, 12"
         const { data } = this.props
         if(data.type === 'Transit')
         {
-            defaultColor = '#' + data.line.colour.substring(3);
+            colour = '#' + data.line.colour.substring(3);
+            dashArray = ""
         }
 
-        return defaultColor;
+        return {colour: colour, dashArray: dashArray};
     }
 
     render() {
-        const color = this.getLineColour()
+        const lineProps = this.getLineProperties()
         return (
-            <Polyline positions={this.props.data.geometry.coordinates} color={color} />
+            <Polyline positions={this.props.data.geometry.coordinates} color={lineProps.colour} weight={5}
+                dashArray={lineProps.dashArray} opacity={0.8} onMouseover/>
         ) 
     }
 

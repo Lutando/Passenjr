@@ -8,8 +8,6 @@ import DepartureMarkerContainer from './DepartureMarkerContainer';
 
 import ArrivalMarkerContainer from './ArrivalMarkerContainer';
 
-import ItineraryContainer from './ItineraryContainer';
-
 import LegContainer from './LegContainer';
 
 import { setDepartureLocation, setArrivalLocation } from '../actions/location';
