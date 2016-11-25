@@ -9,6 +9,7 @@ import DepartureMarkerContainer from './DepartureMarkerContainer';
 import ArrivalMarkerContainer from './ArrivalMarkerContainer';
 
 import LegContainer from './LegContainer';
+import StopContainer from './StopContainer';
 
 import { setDepartureLocation, setArrivalLocation } from '../actions/location';
 import { fetchJourney } from '../actions/journey';
@@ -66,9 +67,53 @@ class MapContainer extends Component {
       
   }
 
+  getStops() {
+
+    if(this.props.fetchedJourney)
+    {
+      const { legs } = this.props.journey.itineraries[0]
+      var data = Immutable.fromJS(legs)
+
+      var filtered = data.filter(x => x.get('type') ==='Transit');
+
+      var filterTransitLegs = filtered.map(function (leg) {
+
+          var waypoints = leg.get('waypoints').map(function(waypoint) {
+
+            var newCoordinates = waypoint.get('stop').get('geometry').get('coordinates').reverse();
+            var w = waypoint.setIn(['stop', 'geometry', 'coordinates'], newCoordinates)
+          
+            return w;
+          });
+        
+          var l = leg.setIn(['waypoints'], waypoints)
+          return l;
+      });
+
+    var newLegs = filterTransitLegs.toJS()
+    var stopComponents = []
+    for(var i=0; i < newLegs.length; i++ )
+    {
+      for(var k =0; k < newLegs[i].waypoints.length; k++)
+      {
+        var stopProps = newLegs[i].waypoints[k]
+        stopProps.colour = newLegs[i].line.colour
+        //console.log(stopProps)
+        stopComponents.push(<StopContainer key={this.props.journey.id + '/' + stopProps.stop.id} data={stopProps}  />)
+      }
+    }
+    return stopComponents;
+    }
+    return null
+    
+  }
+
   render() {
     let legs = null;
+    let stops = null;
     legs = this.getLegs()
+    stops = this.getStops()
+    //console.log(stops)
     return (
       <div className="leaflet-map">
         <Map center={[-33.9231726,18.4217921]} zoom={13} zoomControl={false} onContextmenu={this.handleContextMenu.bind(this)}>
@@ -79,6 +124,7 @@ class MapContainer extends Component {
             <DepartureMarkerContainer />
             <ArrivalMarkerContainer />
               {legs}
+              {stops}
             </Map>
         </div>
       );

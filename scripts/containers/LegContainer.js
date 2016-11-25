@@ -28,11 +28,20 @@ class LegContainer extends Component {
         return {colour: colour, dashArray: dashArray};
     }
 
+    handleMouseOver(e) {
+        //console.log('mouseover')
+    }
+
+    handleMouseOut(e) {
+        //console.log('mouseout')
+    }
+
     render() {
         const lineProps = this.getLineProperties()
+        //console.log(this.props.data.geometry.coordinates)
         return (
             <Polyline positions={this.props.data.geometry.coordinates} color={lineProps.colour} weight={5}
-                dashArray={lineProps.dashArray} opacity={0.8} onMouseover/>
+                dashArray={lineProps.dashArray} opacity={0.8} onMouseover={this.handleMouseOver.bind(this)} onMouseout={this.handleMouseOut.bind(this)}/>
         ) 
     }
 
