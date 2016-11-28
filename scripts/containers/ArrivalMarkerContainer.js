@@ -37,7 +37,7 @@ class ArrivalMarkerContainer extends Component {
 
     renderMarker() {
             return <Marker position={[this.props.arrivalLocation[1],this.props.arrivalLocation[0]]} draggable={true} onDragend={this.handleMarkerDragged.bind(this)}>
-                    <Popup>
+                    <Popup className={'map-span'}>
                       <span>Arrival: {this.props.arrivalLocation[1].toFixed(5)} , {this.props.arrivalLocation[0].toFixed(5)} </span>
                     </Popup>
                   </Marker>       

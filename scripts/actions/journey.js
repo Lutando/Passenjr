@@ -37,9 +37,13 @@ export function fetchJourney(query) {
         axios.defaults.headers = headers
         axios.post(`${urls.TRANSITAPI_URL}/journeys`,{...journeyQuery})
             .then((response) => {
-                dispatch({type: types.FETCH_JOURNEY_FULFILLED, payload: response.data})
                 var a = normalize(response.data,journeySchema)
                 console.log(a)
+                var dispatchData = {...response.data, ...a}
+                console.log(dispatchData)
+                dispatch({type: types.FETCH_JOURNEY_FULFILLED, payload: response.data})
+                //var a = normalize(response.data,journeySchema)
+                //console.log(a)
 
             })
             .catch((err) => {

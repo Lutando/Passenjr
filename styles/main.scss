@@ -5,6 +5,7 @@ $navbar-height: 4rem;
     height: 100vh;
     width: 100%;
     z-index: 0;
+    font: 13px/1.5 "Source Sans Pro",sans-serif;
 }
 
 .full-height {
@@ -60,8 +61,17 @@ body {
     margin-left: 1.5rem;
 }
 
-/*.map-span .leaflet-popup {
+.map-span .leaflet-popup-content-wrapper{
     background-color: #3f4f67 !important;
     color: #d9d9d9 !important
 
-}*/
+}
+
+.leaflet-popup-tip {
+    background-color: #3f4f67
+    
+}
+
+body {
+    font-family: "Source Sans Pro",sans-serif;
+}
