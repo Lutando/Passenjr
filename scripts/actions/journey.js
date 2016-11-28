@@ -27,7 +27,7 @@ export function fetchJourney(query) {
         var journeyQuery = {
             geometry: geometryQuery,
             maxItineraries: maxItineraries,
-            time: '2016-11-24T16:39:48Z' //for testing
+            time: '2016-11-28T16:39:48Z' //for testing
         }
 
 

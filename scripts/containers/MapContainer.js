@@ -59,7 +59,7 @@ class MapContainer extends Component {
         var newDataJs = newData.toJS();
         var legComponents = newDataJs.map(function(legData) {
 
-          return <LegContainer key={legData.href} data={legData} />
+          return <LegContainer key={legData.href + 'leg'} data={legData} />
         })
         return legComponents;
     }
@@ -92,6 +92,7 @@ class MapContainer extends Component {
 
     var newLegs = filterTransitLegs.toJS()
     var stopComponents = []
+    var stopExists = {}
     for(var i=0; i < newLegs.length; i++ )
     {
       for(var k =0; k < newLegs[i].waypoints.length; k++)
@@ -99,7 +100,14 @@ class MapContainer extends Component {
         var stopProps = newLegs[i].waypoints[k]
         stopProps.colour = newLegs[i].line.colour
         //console.log(stopProps)
-        stopComponents.push(<StopContainer key={this.props.journey.id + '/' + stopProps.stop.id} data={stopProps}  />)
+        stopExists[stopProps.stop.id] += stopProps.stop.id
+        if(stopExists[stopProps.stop.id].length > 45)
+        {
+            //console.log(stopProps)
+        }
+        
+        //console.log(stopExists)
+        stopComponents.push(<StopContainer key={stopProps.stop.id+'/' + i} data={stopProps}  />)
       }
     }
     return stopComponents;
