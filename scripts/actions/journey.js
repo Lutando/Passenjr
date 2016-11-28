@@ -1,10 +1,12 @@
 import axios from 'axios';
 import GeoJSON from 'geojson';
+import { normalize } from 'normalizr';
 
 import * as urls from '../constants/Urls';
 import * as types from '../constants/ActionTypes';
 
 import { formatHeader } from '../utils/TransitApiUtils';
+import { journeySchema } from '../constants/Schemas'
 
 export function fetchJourney(query) {
     return function (dispatch) {
@@ -36,6 +38,8 @@ export function fetchJourney(query) {
         axios.post(`${urls.TRANSITAPI_URL}/journeys`,{...journeyQuery})
             .then((response) => {
                 dispatch({type: types.FETCH_JOURNEY_FULFILLED, payload: response.data})
+                var a = normalize(response.data,journeySchema)
+                console.log(a)
 
             })
             .catch((err) => {
