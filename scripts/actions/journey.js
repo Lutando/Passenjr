@@ -5,7 +5,7 @@ import { normalize } from 'normalizr';
 import * as urls from '../constants/Urls';
 import * as types from '../constants/ActionTypes';
 
-import { formatHeader } from '../utils/TransitApiUtils';
+import { formatHeader, reverseCoordinates } from '../utils/TransitApiUtils';
 import { journeySchema } from '../constants/Schemas'
 
 export function fetchJourney(query) {
@@ -38,8 +38,12 @@ export function fetchJourney(query) {
         axios.post(`${urls.TRANSITAPI_URL}/journeys`,{...journeyQuery})
             .then((response) => {
                 var a = normalize(response.data,journeySchema)
+                console.time('reverse')
+                reverseCoordinates(a);
+                console.timeEnd('reverse')
                 console.log(a)
-                var dispatchData = {...response.data, ...a}
+
+                var dispatchData = {...response.data, ...a.entities}
                 console.log(dispatchData)
                 dispatch({type: types.FETCH_JOURNEY_FULFILLED, payload: response.data})
                 //var a = normalize(response.data,journeySchema)
