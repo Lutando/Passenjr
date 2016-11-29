@@ -1,11 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Immutable from 'immutable';
 
 import { Map, Marker, Popup, TileLayer, ZoomControl } from 'react-leaflet';
 
 import DepartureMarkerContainer from './DepartureMarkerContainer';
-
 import ArrivalMarkerContainer from './ArrivalMarkerContainer';
 
 import LegContainer from './LegContainer';
@@ -19,7 +17,10 @@ const propTypes = {
   departureLocation: PropTypes.array,
   arrivalLocation: PropTypes.array,
   fetchedJourney: PropTypes.bool,
-  journey: PropTypes.object,
+  fetchingJourney: PropTypes.bool,
+  itineraryId: PropTypes.string,
+  itineraries: PropTypes.object,
+  legs: PropTypes.object,
   errorLocation: PropTypes.string,
 };
 
@@ -28,11 +29,11 @@ class MapContainer extends Component {
   handleContextMenu(e) {
       const { dispatch } = this.props;
 
-      const location = [e.latlng.lng, e.latlng.lat];
-
+      const location = [e.latlng.lat,e.latlng.lng];
       const prevlocation = this.props.departureLocation
       dispatch(setDepartureLocation(location));
       dispatch(setArrivalLocation(prevlocation));
+
       //this will be removed, just here for test purposes
       if(location.length == 2 && prevlocation.length == 2)
       {
@@ -40,88 +41,54 @@ class MapContainer extends Component {
         dispatch(fetchJourney(query))
       }
     }
+    getLegContainers() {
 
-  getLegs() {
-    //<50ms call :S
-    if(this.props.fetchedJourney)
-    {
-        const { legs } = this.props.journey.itineraries[0]
-        var data = Immutable.fromJS(legs)
-        var newData = data.map(function(leg) {
-
-          var newCoordinates = leg.get('geometry').get('coordinates').map(function(coordinate){
-            return coordinate.reverse()
-          })
-          var newLeg = leg.setIn(['geometry', 'coordinates'], newCoordinates);
-
-          return newLeg
-        })
-        var newDataJs = newData.toJS();
-        var legComponents = newDataJs.map(function(legData) {
-
-          return <LegContainer key={legData.href + 'leg'} data={legData} />
-        })
-        return legComponents;
-    }
-    return null;
-      
-  }
-
-  getStops() {
-
-    if(this.props.fetchedJourney)
-    {
-      const { legs } = this.props.journey.itineraries[0]
-      var data = Immutable.fromJS(legs)
-
-      var filtered = data.filter(x => x.get('type') ==='Transit');
-
-      var filterTransitLegs = filtered.map(function (leg) {
-
-          var waypoints = leg.get('waypoints').map(function(waypoint) {
-
-            var newCoordinates = waypoint.get('stop').get('geometry').get('coordinates').reverse();
-            var w = waypoint.setIn(['stop', 'geometry', 'coordinates'], newCoordinates)
-          
-            return w;
-          });
-        
-          var l = leg.setIn(['waypoints'], waypoints)
-          return l;
-      });
-
-    var newLegs = filterTransitLegs.toJS()
-    var stopComponents = []
-    var stopExists = {}
-    for(var i=0; i < newLegs.length; i++ )
-    {
-      for(var k =0; k < newLegs[i].waypoints.length; k++)
+      if(this.props.fetchedJourney && this.props.itineraryId && !this.props.fetchingJourney)
       {
-        var stopProps = newLegs[i].waypoints[k]
-        stopProps.colour = newLegs[i].line.colour
-        //console.log(stopProps)
-        stopExists[stopProps.stop.id] += stopProps.stop.id
-        if(stopExists[stopProps.stop.id].length > 45)
-        {
-            //console.log(stopProps)
-        }
-        
-        //console.log(stopExists)
-        stopComponents.push(<StopContainer key={stopProps.stop.id+'/' + i} data={stopProps}  />)
+        console.log(this.props.itineraryId)
+        var legIds = this.props.itineraries[this.props.itineraryId].legs
+        var legComponents = legIds.map(function(legId) {
+          return <LegContainer key={legId} legId={legId} />
+        })
+
+        return legComponents
       }
+      return null;
     }
-    return stopComponents;
+
+    getStopContainers() {
+
+      if(this.props.fetchedJourney && this.props.itineraryId && !this.props.fetchingJourney)
+      {
+        var legIds = this.props.itineraries[this.props.itineraryId].legs
+        var legs = legIds.map((legId) => {
+          return this.props.legs[legId]
+        });
+
+        var filteredLegs = legs.filter(x => x.type === 'Transit')
+
+        var stopContainers = []
+
+        for(var i = 0; i < filteredLegs.length; i++) {
+          for(var k = 0; k < filteredLegs[i].waypoints.length; k++) {
+            var stopId = filteredLegs[i].waypoints[k].stop.id
+            stopContainers.push(<StopContainer key={stopId + '/' + i} colour={filteredLegs[i].line.colour}
+              data={filteredLegs[i].waypoints[k].stop} /> )
+          }
+        }
+        return stopContainers
+      }
+
+      return null;
+
     }
-    return null
-    
-  }
 
   render() {
-    let legs = null;
-    let stops = null;
-    legs = this.getLegs()
-    stops = this.getStops()
-    //console.log(stops)
+    var legs = null
+    var stops = null
+    stops = this.getStopContainers()
+    legs = this.getLegContainers()
+
     return (
       <div className="leaflet-map">
         <Map center={[-33.9231726,18.4217921]} zoom={13} zoomControl={false} onContextmenu={this.handleContextMenu.bind(this)}>
@@ -132,7 +99,7 @@ class MapContainer extends Component {
             <DepartureMarkerContainer />
             <ArrivalMarkerContainer />
               {legs}
-              {stops}
+              {stops} 
             </Map>
         </div>
       );
@@ -143,11 +110,14 @@ MapContainer.PropTypes = propTypes;
 
 function mapStateToProps(state) {
   const {departureLocation, arrivalLocation, errorLocation } = state.location;
-  const { journey, fetchedJourney } = state.journey;
+  const { fetchedJourney, itineraryId, legs, itineraries, fetchingJourney } = state.journey;
   return {
     departureLocation,
+    itineraries,
+    itineraryId,
+    legs,
     arrivalLocation,
-    journey,
+    fetchingJourney,
     fetchedJourney,
     errorLocation,
   };

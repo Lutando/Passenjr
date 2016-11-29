@@ -21,7 +21,7 @@ class DepartureMarkerContainer extends Component {
 
     const { dispatch } = this.props;  
 
-    const newLocation = [e.target._latlng.lng,e.target._latlng.lat]
+    const newLocation = [e.target._latlng.lat,e.target._latlng.lng]
     
     dispatch(setDepartureLocation(newLocation))
     if(this.props.arrivalLocation.length == 2)
@@ -37,8 +37,8 @@ class DepartureMarkerContainer extends Component {
     }
 
     renderMarker() {
-            return <Marker position={[this.props.departureLocation[1],this.props.departureLocation[0]]} draggable={true} onDragend={this.handleMarkerDragged.bind(this)}>
-                    <Popup>
+            return <Marker position={this.props.departureLocation} draggable={true} onDragend={this.handleMarkerDragged.bind(this)}>
+                    <Popup className={'map-span'}>
                       <span >Departure: {this.props.departureLocation[1].toFixed(5)} , {this.props.departureLocation[0].toFixed(5)} </span>
                     </Popup>
                   </Marker>       

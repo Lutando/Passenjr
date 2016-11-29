@@ -1,10 +1,12 @@
 import axios from 'axios';
 import GeoJSON from 'geojson';
+import { normalize } from 'normalizr';
 
 import * as urls from '../constants/Urls';
 import * as types from '../constants/ActionTypes';
 
-import { formatHeader } from '../utils/TransitApiUtils';
+import { formatHeader, reverseCoordinates } from '../utils/TransitApiUtils';
+import { journeySchema } from '../constants/Schemas'
 
 export function fetchJourney(query) {
     return function (dispatch) {
@@ -17,8 +19,8 @@ export function fetchJourney(query) {
         var geometryQuery = {
             type: 'MultiPoint',
             coordinates: [
-                query.departureLocation,
-                query.arrivalLocation,                
+                [query.departureLocation[1], query.departureLocation[0]],
+                [query.arrivalLocation[1], query.arrivalLocation[0]],                
             ]
         }
 
@@ -27,7 +29,7 @@ export function fetchJourney(query) {
         var journeyQuery = {
             geometry: geometryQuery,
             maxItineraries: maxItineraries,
-            time: '2016-11-28T16:39:48Z' //for testing
+            time: '2016-11-29T16:39:48Z' //for testing
         }
 
 
@@ -35,8 +37,19 @@ export function fetchJourney(query) {
         axios.defaults.headers = headers
         axios.post(`${urls.TRANSITAPI_URL}/journeys`,{...journeyQuery})
             .then((response) => {
-                dispatch({type: types.FETCH_JOURNEY_FULFILLED, payload: response.data})
+                var a = normalize(response.data,journeySchema)
+                reverseCoordinates(a);
 
+                var dispatchData = { ...a.entities, journeyId: a.result}
+                var journeyId = a.result;
+                
+                if(dispatchData.journeys[journeyId].itineraries.length > 0)
+                {
+                    dispatch({type: types.SELECT_ITINERARY, payload: dispatchData.journeys[journeyId].itineraries[0] })
+                }
+
+                dispatch({type: types.FETCH_JOURNEY_FULFILLED, payload: dispatchData})
+                
             })
             .catch((err) => {
                 dispatch({type: types.FETCH_JOURNEY_REJECTED})

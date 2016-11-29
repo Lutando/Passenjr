@@ -3,13 +3,11 @@ import { connect } from 'react-redux';
 
 import { Polyline } from 'react-leaflet';
 
-import Immutable from 'immutable';
-
 const propTypes = {
     dispatch: PropTypes.func.isRequired,
-    journey: PropTypes.object,
     fetchingJourney: PropTypes.bool,
     fetchedJourney: PropTypes.bool,
+    legs: PropTypes.object,
     errorJourney: PropTypes.string,
 }
 
@@ -18,10 +16,10 @@ class LegContainer extends Component {
     getLineProperties() {
         let colour = '#162834'
         let dashArray = "5, 12"
-        const { data } = this.props
-        if(data.type === 'Transit')
+        const lineData = this.props.legs[this.props.legId]
+        if(lineData.type === 'Transit')
         {
-            colour = '#' + data.line.colour.substring(3);
+            colour = '#' + lineData.line.colour.substring(3);
             dashArray = ""
         }
 
@@ -29,20 +27,20 @@ class LegContainer extends Component {
     }
 
     handleMouseOver(e) {
-        //console.log('mouseover')
+
     }
 
     handleMouseOut(e) {
-        //console.log('mouseout')
+        
     }
 
     render() {
+        const positions = this.props.legs[this.props.legId].geometry.coordinates
         const lineProps = this.getLineProperties()
-        //console.log(this.props.data.geometry.coordinates)
         return (
-            <Polyline positions={this.props.data.geometry.coordinates} color={lineProps.colour} weight={5}
-                dashArray={lineProps.dashArray} opacity={0.8} onMouseover={this.handleMouseOver.bind(this)} onMouseout={this.handleMouseOut.bind(this)}/>
-        ) 
+            <Polyline positions={positions}  color={lineProps.colour} weight={5} dashArray={lineProps.dashArray} 
+                opacity={0.8} onMouseover={this.handleMouseOver.bind(this)} onMouseout={this.handleMouseOut.bind(this)}   />
+        )
     }
 
 }
@@ -50,10 +48,10 @@ class LegContainer extends Component {
 LegContainer.PropTypes = propTypes;
 
 function mapStateToProps(state) {
-    const { journey, fetchingJourney, fetchedJourney, errorJourney } = state.journey;
+    const { fetchingJourney, fetchedJourney, errorJourney, legs } = state.journey;
 
     return {
-        journey,
+        legs,
         fetchingJourney,
         fetchedJourney,
         errorJourney
