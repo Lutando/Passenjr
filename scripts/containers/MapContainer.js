@@ -5,7 +5,6 @@ import Immutable from 'immutable';
 import { Map, Marker, Popup, TileLayer, ZoomControl } from 'react-leaflet';
 
 import DepartureMarkerContainer from './DepartureMarkerContainer';
-
 import ArrivalMarkerContainer from './ArrivalMarkerContainer';
 
 import LegContainer from './LegContainer';
@@ -99,14 +98,13 @@ class MapContainer extends Component {
       {
         var stopProps = newLegs[i].waypoints[k]
         stopProps.colour = newLegs[i].line.colour
-        //console.log(stopProps)
+
         stopExists[stopProps.stop.id] += stopProps.stop.id
         if(stopExists[stopProps.stop.id].length > 45)
         {
-            //console.log(stopProps)
+
         }
-        
-        //console.log(stopExists)
+        //console.log(stopProps)
         stopComponents.push(<StopContainer key={stopProps.stop.id+'/' + i} data={stopProps}  />)
       }
     }
@@ -121,7 +119,6 @@ class MapContainer extends Component {
     let stops = null;
     legs = this.getLegs()
     stops = this.getStops()
-    //console.log(stops)
     return (
       <div className="leaflet-map">
         <Map center={[-33.9231726,18.4217921]} zoom={13} zoomControl={false} onContextmenu={this.handleContextMenu.bind(this)}>
