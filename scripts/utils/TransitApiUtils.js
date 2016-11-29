@@ -24,7 +24,7 @@ export function reverseCoordinates (data) {
                 {
                     data[prop].reverse()
                 }
-                if(data.type === 'MultiPoint')
+                if(data.type === 'MultiPoint' || data.type === 'LineString' )
                 {
                     data[prop].map(function(coordinate) {
                         coordinate.reverse()

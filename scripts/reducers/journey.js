@@ -1,7 +1,6 @@
 import * as types from '../constants/ActionTypes';
 
 export default function reducer(state ={
-    journey: {},
     fetchingJourney: false,
     fetchedJourney: false,
     itineraryId: null,
@@ -19,9 +18,9 @@ export default function reducer(state ={
         case types.FETCH_JOURNEY_FULFILLED: {
             return {
                 ...state,
+                ...action.payload,
                 fetchingJourney:false,
                 fetchedJourney:true,
-                journey: action.payload
             }
         }
         case types.FETCH_JOURNEY_REJECTED: {
@@ -35,6 +34,8 @@ export default function reducer(state ={
             return {
                 ...state,
                 itineraryId: action.payload,
+                legId: null,
+                stopId: null
             }
         }
 

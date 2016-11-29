@@ -19,8 +19,8 @@ export function fetchJourney(query) {
         var geometryQuery = {
             type: 'MultiPoint',
             coordinates: [
-                query.departureLocation,
-                query.arrivalLocation,                
+                [query.departureLocation[1], query.departureLocation[0]],
+                [query.arrivalLocation[1], query.arrivalLocation[0]],                
             ]
         }
 
@@ -40,17 +40,15 @@ export function fetchJourney(query) {
                 var a = normalize(response.data,journeySchema)
                 reverseCoordinates(a);
 
-                console.log(a)
-                
-
                 var dispatchData = { ...a.entities, journeyId: a.result}
                 var journeyId = a.result;
-                console.log(dispatchData)
-                dispatch({type: types.FETCH_JOURNEY_FULFILLED, payload: dispatchData})
+                
                 if(dispatchData.journeys[journeyId].itineraries.length > 0)
                 {
                     dispatch({type: types.SELECT_ITINERARY, payload: dispatchData.journeys[journeyId].itineraries[0] })
                 }
+
+                dispatch({type: types.FETCH_JOURNEY_FULFILLED, payload: dispatchData})
                 
             })
             .catch((err) => {

@@ -5,7 +5,6 @@ import { Circle } from 'react-leaflet';
 
 const propTypes = {
     dispatch: PropTypes.func.isRequired,
-    journey: PropTypes.object,
     fetchingJourney: PropTypes.bool,
     fetchedJourney: PropTypes.bool,
     errorJourney: PropTypes.string,
@@ -14,14 +13,14 @@ const propTypes = {
 class StopContainer extends Component {
     
     getStopColor() {
-        var colour = '#' + this.props.data.colour.substring(3)
+        var colour = '#' + this.props.colour.substring(3)
         return colour
     }
 
     render() {
         var colour = this.getStopColor()
         return (
-            <Circle center={this.props.data.stop.geometry.coordinates} radius={50} 
+            <Circle center={this.props.data.geometry.coordinates} radius={50} 
                 color={colour} fill={true} fillOpacity={0.9} />
         );
     }
@@ -30,10 +29,9 @@ class StopContainer extends Component {
 StopContainer.PropTypes = propTypes;
 
 function mapStateToProps(state) {
-    const { journey, fetchingJourney, fetchedJourney, errorJourney } = state.journey;
+    const { fetchingJourney, fetchedJourney, errorJourney } = state.journey;
 
     return {
-        journey,
         fetchingJourney,
         fetchedJourney,
         errorJourney
