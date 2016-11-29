@@ -115,10 +115,10 @@ class MapContainer extends Component {
   }
 
   render() {
-    let legs = null;
+    /*let legs = null;
     let stops = null;
     legs = this.getLegs()
-    stops = this.getStops()
+    stops = this.getStops()*/
     return (
       <div className="leaflet-map">
         <Map center={[-33.9231726,18.4217921]} zoom={13} zoomControl={false} onContextmenu={this.handleContextMenu.bind(this)}>
@@ -128,8 +128,8 @@ class MapContainer extends Component {
             />
             <DepartureMarkerContainer />
             <ArrivalMarkerContainer />
-              {legs}
-              {stops}
+             {/* {legs}
+              {stops} */}
             </Map>
         </div>
       );
