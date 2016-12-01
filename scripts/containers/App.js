@@ -30,6 +30,7 @@ class App extends Component {
         return (    
           <div className='full-height'>
             <Nav />
+            <SideContainer />
             <MapContainer />
           </div>
         );

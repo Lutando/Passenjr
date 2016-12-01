@@ -72,6 +72,38 @@ body {
     
 }
 
+.side-container {
+    z-index: 1;
+    position: fixed;
+    margin-top: 37rem;
+    margin-left: 1.5rem;
+    width: 30vw;
+    //background: #162834;
+    border-radius: 1.3rem;
+    li {
+        border-top-left-radius: 1.3rem;
+        border-top-right-radius: 1.3rem;
+    }
+    ul {
+        border-top-left-radius: 1.3rem;
+        border-top-right-radius: 1.3rem;
+    }
+}
+
+.card-stack {
+    background-color: transparent;
+}
+
+.sidebar {
+    z-index: 1;
+    position: fixed;
+    margin-top: 7.5rem;
+    margin-left: 1.5rem;
+    width: 30vw;
+    //background: #162834;
+    border-radius: 1.3rem;
+}
+
 body {
     font-family: "Source Sans Pro",sans-serif;
 }
