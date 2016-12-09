@@ -46,19 +46,21 @@ body {
 
 .custom-navbar {
     position: fixed;
-    width: calc(100vw - 3rem);
-    margin: 1.5rem;
-    height: 2rem;
+    width: calc(100vw - 4vh);
+    top: 2vh;
+    left: 2vh;
+    //margin: 1.5rem;
+    //height: 2rem;
     padding-top: 0.8rem;
     padding-bottom: 0.8rem;
     background: #162834;
     z-index: 1;
-    border-radius: 1.3rem;
+    //border-radius: 1.3rem;
     box-shadow: 1px 1px 5px rgba(grey, 0.3);
 }
 
 .nav-logo {
-    margin-left: 1.5rem;
+    margin-left: 2vw;
 }
 
 .map-span .leaflet-popup-content-wrapper{
@@ -75,14 +77,17 @@ body {
 .side-container {
     z-index: 1;
     position: fixed;
-    margin-top: 37rem;
-    margin-left: 1.5rem;
+    top: 30vh;
+    left: 2vh;
+    //margin-top: 30vh;
+    //margin-left: 1vw;
     width: 30vw;
+    height: 50vh;
     //background: #162834;
-    border-radius: 1.3rem;
+    //border-radius: 1.3rem;
     li {
-        border-top-left-radius: 1.3rem;
-        border-top-right-radius: 1.3rem;
+        //border-top-left-radius: 1.3rem;
+        //border-top-right-radius: 1.3rem;
     }
     ul {
         border-top-left-radius: 1.3rem;
@@ -100,10 +105,17 @@ body {
     margin-top: 7.5rem;
     margin-left: 1.5rem;
     width: 30vw;
+    height: 50vh;
     //background: #162834;
     border-radius: 1.3rem;
 }
 
 body {
     font-family: "Source Sans Pro",sans-serif;
+}
+
+.summary {
+    background: #FFF;
+    width: 80%;
+    height: 80%;
 }
