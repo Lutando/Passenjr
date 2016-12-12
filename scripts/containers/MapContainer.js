@@ -45,7 +45,6 @@ class MapContainer extends Component {
 
       if(this.props.fetchedJourney && this.props.itineraryId && !this.props.fetchingJourney)
       {
-        console.log(this.props.itineraryId)
         var legIds = this.props.itineraries[this.props.itineraryId].legs
         var legComponents = legIds.map(function(legId) {
           return <LegContainer key={legId} legId={legId} />

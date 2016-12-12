@@ -29,7 +29,7 @@ export function fetchJourney(query) {
         var journeyQuery = {
             geometry: geometryQuery,
             maxItineraries: maxItineraries,
-            time: '2016-12-08T16:39:48Z' //for testing
+            time: '2016-12-12T16:39:48Z' //for testing
         }
 
 
@@ -56,5 +56,11 @@ export function fetchJourney(query) {
                 console.log(err)
             })
 
+    }
+}
+
+export function setItinerary(query) {
+    return function (dispatch) {
+        dispatch({type: types.SELECT_ITINERARY, payload: query })
     }
 }
