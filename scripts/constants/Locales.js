@@ -1,0 +1,1 @@
+export const SUPPORTED = 'za,dz,ma,ke,eg,gh,tz'

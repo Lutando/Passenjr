@@ -12,6 +12,7 @@ import StopContainer from './StopContainer';
 import { setDepartureLocation, setArrivalLocation } from '../actions/location';
 import { fetchJourney } from '../actions/journey';
 
+
 const propTypes = {
   dispatch: PropTypes.func.isRequired,
   departureLocation: PropTypes.array,
